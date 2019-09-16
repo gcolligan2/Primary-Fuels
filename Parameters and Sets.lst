@@ -1,0 +1,46 @@
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows - 09/16/19 09:01:39 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  *This File will outline the sets, parameters, Variables, and equations/functions
+   2  *used for this model.
+   3   
+   4  Set
+   5  x "Production Sector" /Hydro, Natural Gas, Coal, Wind/,
+   6  y "Portland electricity demand";
+   7   
+   8  Parameters
+   9  a(x) "Production Capcity of the sector (MWh)",
+  10  b(x) "Cost of production of sector ($/MWh)",
+  11  c(x) "CO2 given off by the sector (ton/MWh)",
+  12  d "Cost of ton of CO2 ($/ton)";
+  13   
+  14  Variables
+  15  P(x,y) "Electricity Production",
+  16  Z      "Production Function ($)";
+  17   
+  18   
+  19   
+  20   
+  21   
+
+**** LIST OF STRAY NAMES - CHECK DECLARATIONS FOR SPURIOUS COMMAS
+**** STRAY NAME d OF TYPE PARAM
+**** STRAY NAME Z OF TYPE VAR  
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  28.2.0 r750fa45 WEX-WEI
+
+
+EXECUTION TIME       =        0.000 SECONDS      3 MB  28.2.0 r750fa45 WEX-WEI
+
+
+USER: GAMS Development Corporation, USA              G871201/0000CA-ANY
+      Free Demo, +1 202-342-0180, support@gams.com, www.gams.com DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\gcoll\Documents\GitHub\Primary-Fuels\Parameters and Sets.gms
+Output     C:\Users\gcoll\Documents\GitHub\Primary-Fuels\Parameters and Sets.lst

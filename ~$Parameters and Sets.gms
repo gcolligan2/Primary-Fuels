@@ -2,7 +2,7 @@
 *used for this model.
 
 Set
-x "Production Sector" /Hydro,Natural Gas, Coal, Wind/,
+x "Production Sector" /Hydro, Natural Gas, Coal, Wind/,
 y "Portland electricity demand";
 
 Parameters
@@ -14,6 +14,11 @@ d "Cost of ton of CO2 ($/ton)";
 Variables
 P(x,y) "Electricity Production",
 Z      "Production Function ($)";
+
+
+
+
+
 
 
 

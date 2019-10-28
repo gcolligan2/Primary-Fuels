@@ -1,0 +1,17 @@
+B 3 C o m p i l a t i o n
+B 70 Equation Listing    SOLVE PortlandElectricity Using LP From line 48
+D 73 TotalCap
+D 84 IndvCap
+D 95 Zn
+B 101 Column Listing      SOLVE PortlandElectricity Using LP From line 48
+E 104 i
+E 135 Z
+B 143 Model Statistics    SOLVE PortlandElectricity Using LP From line 48
+B 159 Solution Report     SOLVE PortlandElectricity Using LP From line 48
+F 186 TotalCap
+F 195 IndvCap
+F 206 Zn
+G 210 i
+G 221 Z
+B 231 E x e c u t i o n
+I 231 i

@@ -1,0 +1,250 @@
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows - 10/28/19 13:21:24 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  *This File is the addition of providing the model on solving the production bundles of portland at any*
+   2  *given time*
+   3   
+   4   
+   5  Set
+   6  x "Production Sector" /Hydro, NaturalGas, Coal, Wind/;
+   7   
+   8  alias (x,x1,x2);
+   9   
+  10  Parameters
+  11  a(x) "Production Capcity of the sector (MWh)"
+  12      /   Hydro       450
+  13          NaturalGas  1725
+  14          Coal        800
+  15          Wind        850 /
+  16  b(x) "Cost of production of sector ($/MWh)"
+  17      /   Hydro       1
+  18          NaturalGas  65
+  19          Coal        125
+  20          Wind        20  /
+  21  c(x) "CO2 given off by the sector (ton/MWh)"
+  22      /   Hydro       0.001
+  23          NaturalGas  8.5
+  24          Coal        2.196
+  25          Wind        0.002/
+  26  y "Portland electricity demand" /2625/;
+  27   
+  28  Scalar
+  29  d "Cost of ton of CO2 ($/ton)" /10/;
+  30   
+  31  Positive Variable
+  32  i(x)    "Production of Sector (MWh)";
+  33   
+  34  Variable
+  35  Z      "Production Function ($)";
+  36   
+  37  equations
+  38  TotalCap(x)     "Total Production must meet demand"
+  39  IndvCap(x)  "Individual Production Limit"
+  40  Zn                  "Production Function";
+  41   
+  42  Zn ..  Z =e= sum(x, i(x)*b(x) + i(x)*c(x)*d) ;
+  43  TotalCap(x) .. y =l= sum(x1,i(x1));
+  44  IndvCap(x) .. i(x) =l= a(x);
+  45   
+  46  Model PortlandElectricity /all/;
+  47   
+  48  Solve PortlandElectricity using lp minimzing Z;
+  49   
+  50  display i.l;
+  51   
+  52   
+  53   
+  54   
+  55   
+  56   
+  57   
+  58   
+  59   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  28.2.0 r750fa45 WEX-WEI
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows - 10/28/19 13:21:24 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE PortlandElectricity Using LP From line 48
+
+
+---- TotalCap  =L=  Total Production must meet demand
+
+TotalCap(Hydro)..  - i(Hydro) - i(NaturalGas) - i(Coal) - i(Wind) =L= -2625 ; (LHS = 0, INFES = 2625 ****)
+     
+TotalCap(NaturalGas)..  - i(Hydro) - i(NaturalGas) - i(Coal) - i(Wind) =L= -2625 ; (LHS = 0, INFES = 2625 ****)
+     
+TotalCap(Coal)..  - i(Hydro) - i(NaturalGas) - i(Coal) - i(Wind) =L= -2625 ; (LHS = 0, INFES = 2625 ****)
+     
+REMAINING ENTRY SKIPPED
+
+
+---- IndvCap  =L=  Individual Production Limit
+
+IndvCap(Hydro)..  i(Hydro) =L= 450 ; (LHS = 0)
+     
+IndvCap(NaturalGas)..  i(NaturalGas) =L= 1725 ; (LHS = 0)
+     
+IndvCap(Coal)..  i(Coal) =L= 800 ; (LHS = 0)
+     
+REMAINING ENTRY SKIPPED
+
+
+---- Zn  =E=  Production Function
+
+Zn..  - 1.01*i(Hydro) - 150*i(NaturalGas) - 146.96*i(Coal) - 20.02*i(Wind) + Z =E= 0 ; (LHS = 0)
+     
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows - 10/28/19 13:21:24 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE PortlandElectricity Using LP From line 48
+
+
+---- i  Production of Sector (MWh)
+
+i(Hydro)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       TotalCap(Hydro)
+       -1       TotalCap(NaturalGas)
+       -1       TotalCap(Coal)
+       -1       TotalCap(Wind)
+        1       IndvCap(Hydro)
+       -1.01    Zn
+
+i(NaturalGas)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       TotalCap(Hydro)
+       -1       TotalCap(NaturalGas)
+       -1       TotalCap(Coal)
+       -1       TotalCap(Wind)
+        1       IndvCap(NaturalGas)
+     -150       Zn
+
+i(Coal)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       TotalCap(Hydro)
+       -1       TotalCap(NaturalGas)
+       -1       TotalCap(Coal)
+       -1       TotalCap(Wind)
+        1       IndvCap(Coal)
+     -146.96    Zn
+
+REMAINING ENTRY SKIPPED
+
+---- Z  Production Function ($)
+
+Z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       Zn
+
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows - 10/28/19 13:21:24 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE PortlandElectricity Using LP From line 48
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            5
+NON ZERO ELEMENTS            25
+
+
+GENERATION TIME      =        0.015 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
+
+
+EXECUTION TIME       =        0.015 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows - 10/28/19 13:21:24 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE PortlandElectricity Using LP From line 48
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   PortlandElectricity   OBJECTIVE  Z
+     TYPE    LP                    DIRECTION  MINIMIZE
+     SOLVER  CPLEX                 FROM LINE  48
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE           213789.5000
+
+ RESOURCE USAGE, LIMIT          0.000      1000.000
+ ITERATION COUNT, LIMIT         0    2000000000
+
+IBM ILOG CPLEX   28.2.0 r750fa45 Released Aug 19, 2019 WEI x86 64bit/MS Window
+Cplex 12.9.0.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+LP status(1): optimal
+Cplex Time: 0.00sec (det. 0.01 ticks)
+Optimal solution found.
+Objective :      213789.500000
+
+
+---- EQU TotalCap  Total Production must meet demand
+
+                  LOWER          LEVEL          UPPER         MARGINAL
+
+Hydro             -INF        -2625.0000     -2625.0000          .          
+NaturalGas        -INF        -2625.0000     -2625.0000          .          
+Coal              -INF        -2625.0000     -2625.0000          .          
+Wind              -INF        -2625.0000     -2625.0000      -150.0000      
+
+---- EQU IndvCap  Individual Production Limit
+
+                  LOWER          LEVEL          UPPER         MARGINAL
+
+Hydro             -INF          450.0000       450.0000      -148.9900      
+NaturalGas        -INF          525.0000      1725.0000          .          
+Coal              -INF          800.0000       800.0000        -3.0400      
+Wind              -INF          850.0000       850.0000      -129.9800      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU Zn                  .              .              .             1.0000      
+
+  Zn  Production Function
+
+---- VAR i  Production of Sector (MWh)
+
+                  LOWER          LEVEL          UPPER         MARGINAL
+
+Hydro               .           450.0000        +INF             .          
+NaturalGas          .           525.0000        +INF             .          
+Coal                .           800.0000        +INF             .          
+Wind                .           850.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR Z                 -INF       213789.5000        +INF             .          
+
+  Z  Production Function ($)
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows - 10/28/19 13:21:24 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     50 VARIABLE i.L  Production of Sector (MWh)
+
+Hydro      450.000,    NaturalGas 525.000,    Coal       800.000,    Wind       850.000
+
+
+
+EXECUTION TIME       =        0.000 SECONDS      3 MB  28.2.0 r750fa45 WEX-WEI
+
+
+USER: GAMS Development Corporation, USA              G871201/0000CA-ANY
+      Free Demo, +1 202-342-0180, support@gams.com, www.gams.com DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\gcoll\Documents\GitHub\Primary-Fuels\Equations.gms
+Output     C:\Users\gcoll\Documents\GitHub\Primary-Fuels\Equations.lst
